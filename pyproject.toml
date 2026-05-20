@@ -1,0 +1,11 @@
+[project]
+name = "memutils-veryl-test"
+version = "0.1.0"
+description = "Testbench dependencies for the memutils-veryl package"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "cocotb>=2.0",
+    "pytest>=8.4.2",
+]

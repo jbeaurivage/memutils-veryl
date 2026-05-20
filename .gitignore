@@ -2,3 +2,5 @@
 *.f
 dependencies/
 target/
+.venv/
+.vscode/

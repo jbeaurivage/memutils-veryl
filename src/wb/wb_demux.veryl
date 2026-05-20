@@ -9,14 +9,15 @@ module WishboneDemux #(
     param ADDR_WIDTH: u8 = 32,
     param DATA_WIDTH: u8 = 32,
     // param NUM_SLAVES: u32 = 2 ,
+
+    const SELECT_BITS: u8 = 1,
+    // const SELECT_BITS: u8 = $clog2(NUM_SLAVES);
 ) (
     slave  : modport Wishbone::master    ,
     masters: modport Wishbone::slave  [2],
 
     master_select: input logic<SELECT_BITS>,
 ) {
-    // const SELECT_BITS: u8 = $clog2(NUM_SLAVES);
-    const SELECT_BITS: u8 = 1;
 
     always_comb {
         if master_select == 0 {

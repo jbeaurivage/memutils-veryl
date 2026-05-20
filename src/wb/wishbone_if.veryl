@@ -25,7 +25,7 @@ pub interface Wishbone #(
     var err : logic;
     var rty : logic;
 
-    function valid_request -> bool {
+    function valid_request -> lbool {
         return cyc && stb && !stall;
     }
 

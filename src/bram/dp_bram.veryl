@@ -37,7 +37,7 @@ pub module DualPortBlockRam #(
     unsafe (cdc) {
         always_ff (clk_a) {
             if port_a.enable {
-                for i: u32 in 0..NUM_COL {
+                for i in 0..NUM_COL {
                     if port_a.enable && port_a.byte_write_enable[i] {
                         mem[port_a.address][(i * COL_WIDTH)+:COL_WIDTH] = port_a.write_data[(i * COL_WIDTH)+:COL_WIDTH];
                     }
@@ -49,7 +49,7 @@ pub module DualPortBlockRam #(
 
         always_ff (clk_b) {
             if port_b.enable {
-                for i: u32 in 0..NUM_COL {
+                for i in 0..NUM_COL {
                     if port_b.byte_write_enable[i] {
                         mem[port_b.address][(i * COL_WIDTH)+:COL_WIDTH] = port_b.write_data[(i * COL_WIDTH)+:COL_WIDTH];
                     }

@@ -9,7 +9,7 @@ interface BramPort #(
 ) {
     const DATA_WIDTH: u8 = COL_WIDTH * NUM_COL;
 
-    var enable           : bool             ;
+    var enable           : lbool            ;
     var address          : logic<ADDR_WIDTH>;
     var write_data       : logic<DATA_WIDTH>;
     var byte_write_enable: logic<NUM_COL>   ;

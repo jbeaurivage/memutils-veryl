@@ -7,14 +7,15 @@ module WishboneMux #(
     param ADDR_WIDTH: u8 = 32,
     param DATA_WIDTH: u8 = 32,
     // param NUM_MASTERS: u32 = 2 ,
+
+    // const SELECT_BITS: u8 = $clog2(NUM_SLAVES);
+    const SELECT_BITS: u8 = 1,
 ) (
     slaves: modport Wishbone::master [2],
     master: modport Wishbone::slave     ,
 
     slave_select: input logic<SELECT_BITS>,
 ) {
-    // const SELECT_BITS: u8 = $clog2(NUM_SLAVES);
-    const SELECT_BITS: u8 = 1;
 
     always_comb {
         if slave_select == 0 {

@@ -51,7 +51,7 @@ pub module ScratchpadRam #(
     /// Data width, in bits
     param DATA_WIDTH: u32 = 32,
     /// Number of elements this RAM holds
-    param DEPTH     : u64 = 256          ,
+    param DEPTH     : u32 = 256          ,
     param ADDR_WIDTH: u32 = $clog2(DEPTH),
 ) (
     clk: input clock,
@@ -74,7 +74,7 @@ pub module ScratchpadRam #(
     // Write logic
     always_ff {
         if_reset {
-            for i: u64 in 0..DEPTH {
+            for i in 0..DEPTH {
                 mem[i[ADDR_WIDTH - 1:0]] = 0;
             }
         } else {
