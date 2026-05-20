@@ -19,13 +19,23 @@ module WishboneMux #(
 
     always_comb {
         if slave_select == 0 {
-            master        <> slaves[0];
-            slaves[1].stb =  0;
-            slaves[1].cyc =  0;
+            master                 <> slaves[0];
+            slaves[1].stb          =  0;
+            slaves[1].cyc          =  0;
+            slaves[1].select       =  0;
+            slaves[1].lock         =  0;
+            slaves[1].write_data   =  0;
+            slaves[1].addr         =  0;
+            slaves[1].write_enable =  0;
         } else {
-            master        <> slaves[1];
-            slaves[0].stb =  0;
-            slaves[0].cyc =  0;
+            master                 <> slaves[1];
+            slaves[0].stb          =  0;
+            slaves[0].cyc          =  0;
+            slaves[0].select       =  0;
+            slaves[0].lock         =  0;
+            slaves[0].write_data   =  0;
+            slaves[0].addr         =  0;
+            slaves[0].write_enable =  0;
         }
     }
     // connect master <> slaves[slave_select];
