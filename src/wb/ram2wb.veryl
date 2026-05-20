@@ -33,6 +33,7 @@ module Bram2Wishbone #(
     // In the BRAM interface, the byte select bits directly enable writes
     assign ram_port.byte_write_enable = wb.select & {wb.write_enable & ack repeat COL_WIDTH};
     assign wb.read_data               = ram_port.read_data;
+    assign wb.stall                   = false;
 
     var prev_select: logic<COL_WIDTH>;
 

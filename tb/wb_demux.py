@@ -35,10 +35,10 @@ def reset(dut):
 async def test_wishbone_demux_basic(dut):
     """Test WishboneDemux with two masters and one slave."""
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     reset(dut)
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     # Test master_select = 0
     dut.master_select.value = 0
@@ -56,7 +56,7 @@ async def test_wishbone_demux_basic(dut):
     dut.slave.err.value = 1
     dut.slave.read_data.value = 0xCACABEBE
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     assert dut.slave.cyc.value == 1
     assert dut.slave.stb.value == 1
@@ -74,7 +74,7 @@ async def test_wishbone_demux_basic(dut):
     # Also check that STALL is set for any inactive master
     assert dut.masters[1].stall.value == 1
 
-    await Timer(1, units = "ns")
+    await Timer(1, unit = "ns")
 
     # Test master_select = 1
     dut.master_select.value = 1
@@ -93,7 +93,7 @@ async def test_wishbone_demux_basic(dut):
     dut.slave.err.value = 1
     dut.slave.read_data.value = 0xB1AB2
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     assert dut.slave.cyc.value == 1
     assert dut.slave.stb.value == 1
@@ -117,7 +117,7 @@ async def test_wishbone_demux_basic(dut):
 
     dut.slave.stall.value = 0
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     assert dut.masters[1].stall.value == 0
     assert dut.masters[0].stall.value == 1

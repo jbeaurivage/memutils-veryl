@@ -30,9 +30,11 @@ pub module SinglePortBlockRam #(
     }
 
     always_ff {
-        for i in 0..NUM_COL {
-            if port.enable && port.byte_write_enable[i] {
-                mem[port.address][(i * COL_WIDTH)+:COL_WIDTH] = port.write_data[(i * COL_WIDTH)+:COL_WIDTH];
+        if_reset {} else {
+            for i in 0..NUM_COL {
+                if port.enable && port.byte_write_enable[i] {
+                    mem[port.address][(i * COL_WIDTH)+:COL_WIDTH] = port.write_data[(i * COL_WIDTH)+:COL_WIDTH];
+                }
             }
         }
     }

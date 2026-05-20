@@ -6,7 +6,6 @@ def assert_read_port(port, address, expected):
     assert port.read_data.value == expected, \
         f"Error at {port} address {address}: expected {hex(expected)}, got {hex(port.read_data.value)}"
 
-@cocotb.coroutine
 async def reset(dut):
     dut.rst.value = 0
     dut.ram.mem.value = [0] * len(dut.ram.mem.value)
@@ -23,7 +22,7 @@ async def reset(dut):
 
 @cocotb.test()
 async def memory_data_test(dut):
-    cocotb.start_soon(Clock(dut.clk, 1, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 1, unit="ns").start())
     await reset(dut)
 
     dut.port_a.enable.value = 1

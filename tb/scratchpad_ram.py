@@ -6,7 +6,7 @@ import random
 @cocotb.test()
 async def scratchpad_ram_test(dut):
     # Start a 10 ns clock
-    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
     await RisingEdge(dut.clk)
 
     # Init and reset
@@ -33,10 +33,10 @@ async def scratchpad_ram_test(dut):
         write_value = random.randint(0, 0xFFFFFFFF)
 
         # perform reads
-        await Timer(1, units="ns") # wait a ns to test async read
+        await Timer(1, unit="ns") # wait a ns to test async read
         dut.read_ports[0].address.value = read_address1
         dut.read_ports[1].address.value = read_address2
-        await Timer(1, units="ns")
+        await Timer(1, unit="ns")
         assert dut.read_ports[0].data.value == theorical_regs[read_address1]
         assert dut.read_ports[1].data.value == theorical_regs[read_address2]
 
@@ -47,9 +47,9 @@ async def scratchpad_ram_test(dut):
         await RisingEdge(dut.clk)
         dut.write_port.write_enable.value = 0
         theorical_regs[write_address] = write_value
-        await Timer(1, units="ns")
+        await Timer(1, unit="ns")
 
-    await Timer(1, units="ns")
+    await Timer(1, unit="ns")
     dut.write_port.address.value = 0
     dut.write_port.write_enable.value = 1
     dut.write_port.data.value = 0xAEAEAEAE
@@ -57,9 +57,9 @@ async def scratchpad_ram_test(dut):
     dut.write_port.write_enable.value = 0
     theorical_regs[write_address] = 0
 
-    await Timer(1, units="ns") # wait a ns to test async read
+    await Timer(1, unit="ns") # wait a ns to test async read
     dut.read_ports[0].address.value = 0
-    await Timer(1, units="ns")
+    await Timer(1, unit="ns")
     assert int(dut.read_ports[0].data.value) == 0xAEAEAEAE
 
     print("Random write/read test completed successfully.")

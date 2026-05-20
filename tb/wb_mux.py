@@ -28,10 +28,10 @@ def reset(dut):
 async def test_wishbone_demux_basic(dut):
     """Test WishboneMux with two slaves and one master."""
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     reset(dut)
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     # Test slave_select = 0
     dut.slave_select.value = 0
@@ -50,7 +50,7 @@ async def test_wishbone_demux_basic(dut):
     dut.slaves[0].err.value = 1
     dut.slaves[0].read_data.value = 0xCACABEBE
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     assert dut.slaves[0].cyc.value == 1
     assert dut.slaves[0].stb.value == 1
@@ -69,7 +69,7 @@ async def test_wishbone_demux_basic(dut):
     assert dut.master.err.value == 1
     assert dut.master.read_data.value == 0xCACABEBE
 
-    await Timer(1, units = "ns")
+    await Timer(1, unit = "ns")
 
     # Test slave_select = 1
     dut.slave_select.value = 1
@@ -88,7 +88,7 @@ async def test_wishbone_demux_basic(dut):
     dut.slaves[1].err.value = 1
     dut.slaves[1].read_data.value = 0xB1AB2
 
-    await Timer(1, units='ns')
+    await Timer(1, unit='ns')
 
     assert dut.slaves[1].cyc.value == 1
     assert dut.slaves[1].stb.value == 1

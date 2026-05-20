@@ -9,7 +9,6 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge
 
-@cocotb.coroutine
 async def reset(dut):
     dut.rst.value = 0
     # Asserting RESET does not set the memory to 0, just like in real hardware.
@@ -34,7 +33,7 @@ def assert_read(dut, address, expected):
 @cocotb.test()
 async def memory_data_test(dut):
     # INIT MEMORY
-    cocotb.start_soon(Clock(dut.clk, 1, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 1, unit="ns").start())
     await reset(dut)
 
     dut.port.enable.value = 1
@@ -74,7 +73,7 @@ async def memory_data_test(dut):
         dut.port.byte_write_enable.value = 0b1111
         await RisingEdge(dut.clk)
         # Check that setting write_data doesn't affect RAM state
-        dut.port.write_data = 0xFAFABEBE
+        dut.port.write_data.value = 0xFAFABEBE
         dut.port.byte_write_enable.value = 0
         await RisingEdge(dut.clk)
 
@@ -129,5 +128,5 @@ async def memory_data_test(dut):
             await RisingEdge(dut.clk)
 
             # Check that we're only touching the concerned bytes
-            assert dut.port.read_data.value & mask == data & mask
-            assert dut.port.read_data.value & ~mask == dut.ram.mem.value[int(address/4)] & ~mask
+            assert dut.port.read_data.value.to_unsigned() & mask == data & mask
+            assert dut.port.read_data.value.to_unsigned() & ~mask == dut.ram.mem.value[int(address/4)].to_unsigned() & ~mask

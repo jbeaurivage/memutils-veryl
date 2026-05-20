@@ -2,7 +2,6 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge
 
-@cocotb.coroutine
 async def reset(dut):
     # Reset is high to conform to wishbone spec
     dut.rst.value = 1
@@ -36,14 +35,14 @@ def assert_read(dut, address, expected):
 def start_read_txn(dut, address, byte_select):
     dut.wb.cyc.value = 1
     dut.wb.stb.value = 1
-    dut.wb.write_enable = 0
+    dut.wb.write_enable.value = 0
     dut.wb.select.value = byte_select
     dut.wb.addr.value = address
 
 def start_write_txn(dut, address, data, byte_select):
     dut.wb.cyc.value = 1
     dut.wb.stb.value = 1
-    dut.wb.write_enable = 1
+    dut.wb.write_enable.value = 1
     dut.wb.select.value = byte_select
     dut.wb.addr.value = address
     dut.wb.write_data.value = data
@@ -58,7 +57,7 @@ def memory_contents(dut):
 @cocotb.test()
 async def memory_data_test(dut):
     # INIT MEMORY
-    cocotb.start_soon(Clock(dut.clk, 1, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 1, unit="ns").start())
     await reset(dut)
         
     # Test: Write and read back data
@@ -112,7 +111,7 @@ async def memory_data_test(dut):
         # check that setting write_data doesn't affect RAM state
         finish_txn(dut)
         start_read_txn(dut, address, 0b1111)
-        dut.wb.write_data = 0xFAFABEBE
+        dut.wb.write_data.value = 0xFAFABEBE
 
         await RisingEdge(dut.clk)
 
@@ -180,8 +179,8 @@ async def memory_data_test(dut):
             # Check that we're only touching the concerned bytes
             assert dut.wb.ack.value == 1
             assert dut.wb.err.value == 0
-            assert dut.wb.read_data.value & mask == data & mask
-            assert dut.wb.read_data.value & ~mask == memory_contents(dut)[int(address/4)] & ~mask
+            assert dut.wb.read_data.value.to_unsigned() & mask == data & mask
+            assert dut.wb.read_data.value.to_unsigned() & ~mask == memory_contents(dut)[int(address/4)].to_unsigned() & ~mask
 
     # ===============
     # ERROR TEST

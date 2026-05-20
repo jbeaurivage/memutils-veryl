@@ -29,7 +29,6 @@ def finish_txn(wb):
     wb.cyc.value = 0
     wb.stb.value = 0
 
-@cocotb.coroutine
 async def reset(dut):
     dut.rst.value = 1
     # Manually clear RAM for test repeatability
@@ -50,7 +49,7 @@ async def reset(dut):
 @cocotb.test()
 async def dual_port_wishbone_ram_test(dut):
     """Test dual-ported Wishbone RAM backed by dual-port RAM."""
-    cocotb.start_soon(Clock(dut.clk, 1, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 1, unit="ns").start())
     await reset(dut)
 
     test_data = [
