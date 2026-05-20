@@ -20,7 +20,9 @@ pub module WishboneRam #(
     const RAM_DEPTH     : u64 = SIZE / {56'b0, NUM_COL};
     const MEM_ADDR_WIDTH: u32 = $clog2(RAM_DEPTH);
 
-    let rst_n: reset = rst as reset;
+    // TODO: this is a veryl bug: reset signal conversion
+    // isn't being done properly, must invert the signal manually.
+    let rst_n: reset = !rst as reset;
 
     inst ram_port: BramPort #( ADDR_WIDTH: MEM_ADDR_WIDTH, NUM_COL, COL_WIDTH );
 
