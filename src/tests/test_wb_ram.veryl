@@ -2,17 +2,10 @@ module WbRamTest (
     clk: input clock,
     rst: input reset,
 ) {
+    #[allow(unassign_variable)]
     inst wb: Wishbone;
 
-    inst ram: WishboneRam #(
-        ADDR_WIDTH: 32 ,
-        DATA_WIDTH: 32 ,
-        SIZE      : 256,
-    ) (
-        clk  ,
-        rst  ,
-        wb   ,
-    );
+    inst ram: WishboneRam #( ADDR_WIDTH: 32, DATA_WIDTH: 32, SIZE: 256 ) ( clk, rst, wb );
 }
 
 #[test(test_wb_ram, WbRamTest)]

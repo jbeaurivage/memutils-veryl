@@ -2,7 +2,10 @@ module DualPortWbRamTest (
     clk: input clock,
     rst: input reset,
 ) {
+    #[allow(unassign_variable)]
     inst wb_a: Wishbone #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
+
+    #[allow(unassign_variable)]
     inst wb_b: Wishbone #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
 
     inst ram: WishboneDualPortRam #(

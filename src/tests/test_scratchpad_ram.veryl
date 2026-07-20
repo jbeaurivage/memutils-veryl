@@ -4,7 +4,10 @@ module TestScratchpadRam (
 ) {
 
     // Test with dual read ports
+    #[allow(unassign_variable)]
     inst read_ports: ScratchpadRamPort [2] #( DATA_WIDTH: 32, ADDR_WIDTH: 5 );
+
+    #[allow(unassign_variable)]
     inst write_port: ScratchpadRamPort #( DATA_WIDTH: 32, ADDR_WIDTH: 5 );
 
     inst regfile: ScratchpadRam #(

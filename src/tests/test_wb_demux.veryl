@@ -1,14 +1,13 @@
 module TestWishboneDemux (
     master_select: input logic,
 ) {
+    #[allow(unassign_variable)]
     inst masters: Wishbone [2] #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
-    inst slave  : Wishbone #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
 
-    inst demux: WishboneDemux (
-        slave          ,
-        masters        ,
-        master_select  ,
-    );
+    #[allow(unassign_variable)]
+    inst slave: Wishbone #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
+
+    inst demux: WishboneDemux ( slave, masters, master_select );
 }
 
 #[test(test_wb_demux, TestWishboneDemux)]

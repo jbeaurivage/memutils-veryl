@@ -1,14 +1,13 @@
 module TestWishboneMux (
     slave_select: input logic,
 ) {
+    #[allow(unassign_variable)]
     inst master: Wishbone #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
+
+    #[allow(unassign_variable)]
     inst slaves: Wishbone [2] #( ADDR_WIDTH: 32, DATA_WIDTH: 32 );
 
-    inst mux: WishboneMux (
-        slaves        ,
-        master        ,
-        slave_select  ,
-    );
+    inst mux: WishboneMux ( slaves, master, slave_select );
 }
 
 #[test(test_wb_mux, TestWishboneMux)]
