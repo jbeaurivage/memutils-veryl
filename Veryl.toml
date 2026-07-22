@@ -11,7 +11,7 @@ target = { type = "directory", path = "target" }
 
 [test]
 waveform_target = { type = "directory", path = "target/waveform" }
-# waveform_format = "fst"
+waveform_format = "fst"
 
 [publish]
 bump_commit = true
